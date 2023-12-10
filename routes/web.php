@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
     //middleware verified: verifica si el usuario a verificado su cuenta de email, para asegurarnos de que el usaurio tiene un email verdadero o un email que recibe correo, esta verificacion se realiza enviando un email con el link de verificacion, al darle clic se setea el campo de email_verified(base de datos dbeaver con la fecha de verificacion)
 
     //En el codigo que teniamos en Route::get('/dashboard'), estabamos usando el auth y el verified, pero como no vamos a usar el verified porque esto es prueba y estamos iniciando entonces lo elimino y solo trabajo con el auth
+
 
 
 
@@ -39,10 +40,21 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/chirps', function () {
-        //view.index(view es la carpeta, el punto significa 'entrar', index es el nombre de archivp)
-        return view('/chirps.index');
-    })->name('chirps.index');
+    Route::get('/chirps', [ChirpController::class, 'index'])->name('chirps.index');
+
+
+    //Insertar a la BD
+    //a traves del modelo chirp llamamos al metodo create para crear un nuevo registro en la BD, es igual que INSERT en sql.
+    //como parametro recibe un array, con los datos que queremos almacenar, en 'message' queremos guardar el mensaje que escribio el usuario.
+    //y en user_id, utilizamos la funcion especial auth y a traves de ella vamos a llamar el metodo id para obtener el id del usuario que esta actualmente autenticado.
+    
+    //-------Y ASI ES COMO ESTARIAMOS CREANDO UN REGISTRO EN LA BD-----
+    Route::post('/chirps',[ChirpController::class, 'store'])->name('chirps.store');
+
+    Route::get('/information', function () {
+        return view('information.info');    
+    })->name('information.info');
+
 });
 
     require __DIR__.'/auth.php';

@@ -1,4 +1,7 @@
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+    @if(session('status'))
+    <div style="background: rgb(0, 165, 0); padding:4px; border-radius:6px; margin:0px 0px 10px 0px; justify-content:center; display:flex; color:white;">{{ session('status')}}</div>
+    @endif
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -17,6 +20,9 @@
                     </x-nav-link>
                     <x-nav-link :href="route('chirps.index')" :active="request()->routeIs('chirps.index')">
                         {{ __('Chirps') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('information.info')" :active="request()->routeIs('information.info')">
+                        {{ __('Information') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -73,8 +79,11 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('chirps.index')" :active="request()->routeIs('chirps.indexk')">
+            <x-responsive-nav-link :href="route('chirps.index')" :active="request()->routeIs('chirps.index')">
                 {{ __('Chirps') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('information.info')" :active="request()->routeIs('information.info')">
+                {{ __('Information') }}
             </x-responsive-nav-link>
         </div>
 

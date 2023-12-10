@@ -14,4 +14,25 @@
             </div>
         </div>
     </div>
+    <script>
+        function realizarSolicitud() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "{{ route('chirps.store') }}", true);
+
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    var responseData = JSON.parse(xhr.responseText);
+                    console.log(responseData);
+                } else {
+                    console.error('Error:', xhr.statusText);
+                }
+            };
+
+            xhr.onerror = function() {
+                console.error('Error de red');
+            };
+
+            xhr.send();
+        }
+        </script>
 </x-app-layout>
